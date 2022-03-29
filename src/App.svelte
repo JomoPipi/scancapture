@@ -68,6 +68,7 @@
 </script>
 
 <main>
+	<h3> funpics.vercel.app </h3>
 	
 	<div class=buttons>	
 		<button on:click={() => scan(0)}> ⇦ </button>
@@ -86,23 +87,25 @@
 </main>
 
 <style>
+	h3 {
+		margin: 1em;
+		color: #c50;
+		display: block;
+	}
 	main {
 		height: 100%;
 		width: 100%;
-		border: 1px solid red;
 	}
 	.buttons {
 		display: flex;
 		justify-content: center;
-		/* border: 1px solid red; */
 	}
 	.buttons > button {
 		padding: 1em;
 	}
 	.container {
 		position: relative;
-		width: 80%;
-		border: 2px solid blue;
+		width: 100%;
 	}
 	canvas, video {
 		display: block;
