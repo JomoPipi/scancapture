@@ -45,7 +45,7 @@
 			ctx.strokeStyle = 'red'
 			ctx.lineWidth = 1
 			const pos = dir % 2 === 1
-			const y = pos ? x : canvas.height - 1 - x;
+			const y = pos ? x : end - 1 - x;
 			const trail = pos ? 1 : -1;
 			if (goesUpOrDown)
 			{

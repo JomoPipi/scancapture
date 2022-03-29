@@ -413,29 +413,29 @@ var app = (function () {
     			t12 = space();
     			canvas_1 = element("canvas");
     			attr_dev(h3, "class", "svelte-11pg66y");
-    			add_location(h3, file, 57, 1, 1678);
+    			add_location(h3, file, 57, 1, 1668);
     			attr_dev(button0, "class", "svelte-11pg66y");
-    			add_location(button0, file, 60, 2, 1734);
+    			add_location(button0, file, 60, 2, 1724);
     			attr_dev(button1, "class", "svelte-11pg66y");
-    			add_location(button1, file, 61, 2, 1782);
+    			add_location(button1, file, 61, 2, 1772);
     			attr_dev(button2, "class", "svelte-11pg66y");
-    			add_location(button2, file, 62, 2, 1830);
+    			add_location(button2, file, 62, 2, 1820);
     			attr_dev(button3, "class", "svelte-11pg66y");
-    			add_location(button3, file, 63, 2, 1878);
+    			add_location(button3, file, 63, 2, 1868);
     			attr_dev(button4, "class", "svelte-11pg66y");
-    			add_location(button4, file, 64, 2, 1926);
+    			add_location(button4, file, 64, 2, 1916);
     			attr_dev(div0, "class", "buttons svelte-11pg66y");
-    			add_location(div0, file, 59, 1, 1711);
+    			add_location(div0, file, 59, 1, 1701);
     			video_1.playsInline = true;
     			video_1.autoplay = true;
     			attr_dev(video_1, "class", "svelte-11pg66y");
-    			add_location(video_1, file, 69, 2, 2050);
+    			add_location(video_1, file, 69, 2, 2040);
     			attr_dev(canvas_1, "class", "svelte-11pg66y");
-    			add_location(canvas_1, file, 70, 2, 2107);
+    			add_location(canvas_1, file, 70, 2, 2097);
     			attr_dev(div1, "class", "container svelte-11pg66y");
-    			add_location(div1, file, 67, 1, 1978);
+    			add_location(div1, file, 67, 1, 1968);
     			attr_dev(main, "class", "svelte-11pg66y");
-    			add_location(main, file, 56, 0, 1670);
+    			add_location(main, file, 56, 0, 1660);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -541,7 +541,7 @@ var app = (function () {
     			ctx.strokeStyle = 'red';
     			ctx.lineWidth = 1;
     			const pos = dir % 2 === 1;
-    			const y = pos ? x : canvas.height - 1 - x;
+    			const y = pos ? x : end - 1 - x;
     			const trail = pos ? 1 : -1;
 
     			if (goesUpOrDown) {
