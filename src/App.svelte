@@ -1,7 +1,7 @@
 <script lang=ts>
+	import { onMount } from "svelte";
 
 	let video : HTMLVideoElement
-	let scanner : HTMLElement
 	let canvas : HTMLCanvasElement
 	
 	
@@ -9,7 +9,11 @@
 	  audio: false,
 	  video: true
 	};
-	
+
+	onMount(() => {
+		navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+	})
+
 	function handleSuccess(stream) {
 	//   (window as any).stream = stream; // make stream available to browser console
 	  video.srcObject = stream;
@@ -19,47 +23,45 @@
 	  console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
 	}
 	
-	navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
-
+	let x = 0
 	function scan() {
-		const h = scanner.offsetHeight
-		if (h < video.offsetHeight)
+		if (x < canvas.height)
 		{
-			scanner.style.height = Math.min(video.videoHeight, h + 1) + 'px'
+			x++
+			canvas.getContext('2d').drawImage(video, 
+				0, x, canvas.width, 1, 0, x, canvas.width, 1);
 			requestAnimationFrame(scan)
+		}
+		else
+		{
+			x = 0
 		}
 	}
 </script>
 
 <main>
-    <canvas bind:this={canvas}></canvas>
     <!-- svelte-ignore a11y-media-has-caption -->
     <video bind:this={video} playsinline autoplay></video>
-	<div bind:this={scanner} class=scanner></div>
+	<canvas bind:this={canvas}></canvas>
 	<button on:click={() => {
 		canvas.width = video.videoWidth;
 		canvas.height = video.videoHeight;	  
-		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-		video.style.borderTop = '2px solid cyan'
-		video.style.boxShadow = '10px 0 20px -2px #0ff'
+		// canvas.style.borderTop = '2px solid cyan'
+		// canvas.style.boxShadow = '10px 0 20px -2px #0ff'
 		scan()
 	  }}> FREEZE </button>
 </main>
 
 <style>
-	canvas, video, .scanner {
+	canvas, video {
 		display: block;
 		position: absolute;
 		width: 100vw;
 		height: auto;
-		background: blue;
+		background: transparent;
 	}
-	canvas { top: 0; }
-	video, .scanner { 
-		bottom: 0;
-	}
-	.scanner {
-		height: 0px;
+	video, canvas { 
+		bottom: 50%;
 	}
 	button {
 		position: absolute;

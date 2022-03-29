@@ -68,6 +68,14 @@ var app = (function () {
     function set_current_component(component) {
         current_component = component;
     }
+    function get_current_component() {
+        if (!current_component)
+            throw new Error('Function called outside component initialization');
+        return current_component;
+    }
+    function onMount(fn) {
+        get_current_component().$$.on_mount.push(fn);
+    }
 
     const dirty_components = [];
     const binding_callbacks = [];
@@ -358,12 +366,10 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let main;
-    	let canvas_1;
-    	let t0;
     	let video_1;
+    	let t0;
+    	let canvas_1;
     	let t1;
-    	let div;
-    	let t2;
     	let button;
     	let mounted;
     	let dispose;
@@ -371,44 +377,37 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			main = element("main");
-    			canvas_1 = element("canvas");
-    			t0 = space();
     			video_1 = element("video");
+    			t0 = space();
+    			canvas_1 = element("canvas");
     			t1 = space();
-    			div = element("div");
-    			t2 = space();
     			button = element("button");
     			button.textContent = "FREEZE";
-    			attr_dev(canvas_1, "class", "svelte-1b6of22");
-    			add_location(canvas_1, file, 25, 4, 703);
     			video_1.playsInline = true;
     			video_1.autoplay = true;
-    			attr_dev(video_1, "class", "svelte-1b6of22");
-    			add_location(video_1, file, 27, 4, 794);
-    			attr_dev(div, "class", "scanner svelte-1b6of22");
-    			add_location(div, file, 28, 1, 850);
-    			attr_dev(button, "class", "svelte-1b6of22");
-    			add_location(button, file, 29, 1, 897);
-    			add_location(main, file, 24, 0, 692);
+    			attr_dev(video_1, "class", "svelte-ili1j9");
+    			add_location(video_1, file, 32, 4, 835);
+    			attr_dev(canvas_1, "class", "svelte-ili1j9");
+    			add_location(canvas_1, file, 33, 1, 891);
+    			attr_dev(button, "class", "svelte-ili1j9");
+    			add_location(button, file, 34, 1, 929);
+    			add_location(main, file, 30, 0, 774);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
+    			append_dev(main, video_1);
+    			/*video_1_binding*/ ctx[3](video_1);
+    			append_dev(main, t0);
     			append_dev(main, canvas_1);
     			/*canvas_1_binding*/ ctx[4](canvas_1);
-    			append_dev(main, t0);
-    			append_dev(main, video_1);
-    			/*video_1_binding*/ ctx[5](video_1);
     			append_dev(main, t1);
-    			append_dev(main, div);
-    			/*div_binding*/ ctx[6](div);
-    			append_dev(main, t2);
     			append_dev(main, button);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[7], false, false, false);
+    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[5], false, false, false);
     				mounted = true;
     			}
     		},
@@ -417,9 +416,8 @@ var app = (function () {
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(main);
+    			/*video_1_binding*/ ctx[3](null);
     			/*canvas_1_binding*/ ctx[4](null);
-    			/*video_1_binding*/ ctx[5](null);
-    			/*div_binding*/ ctx[6](null);
     			mounted = false;
     			dispose();
     		}
@@ -444,23 +442,27 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
     	let video;
-    	let scanner;
     	let canvas;
     	const constraints = { audio: false, video: true };
+
+    	onMount(() => {
+    		navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+    	});
 
     	function handleSuccess(stream) {
     		//   (window as any).stream = stream; // make stream available to browser console
     		$$invalidate(0, video.srcObject = stream, video);
     	}
 
-    	navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+    	let x = 0;
 
     	function scan() {
-    		const h = scanner.offsetHeight;
-
-    		if (h < video.offsetHeight) {
-    			$$invalidate(1, scanner.style.height = Math.min(video.videoHeight, h + 1) + 'px', scanner);
+    		if (x < canvas.height) {
+    			x++;
+    			canvas.getContext('2d').drawImage(video, 0, x, canvas.width, 1, 0, x, canvas.width, 1);
     			requestAnimationFrame(scan);
+    		} else {
+    			x = 0;
     		}
     	}
 
@@ -470,13 +472,6 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	function canvas_1_binding($$value) {
-    		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-    			canvas = $$value;
-    			$$invalidate(2, canvas);
-    		});
-    	}
-
     	function video_1_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			video = $$value;
@@ -484,52 +479,44 @@ var app = (function () {
     		});
     	}
 
-    	function div_binding($$value) {
+    	function canvas_1_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
-    			scanner = $$value;
-    			$$invalidate(1, scanner);
+    			canvas = $$value;
+    			$$invalidate(1, canvas);
     		});
     	}
 
     	const click_handler = () => {
-    		$$invalidate(2, canvas.width = video.videoWidth, canvas);
-    		$$invalidate(2, canvas.height = video.videoHeight, canvas);
-    		canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-    		$$invalidate(0, video.style.borderTop = '2px solid cyan', video);
-    		$$invalidate(0, video.style.boxShadow = '10px 0 20px -2px #0ff', video);
+    		$$invalidate(1, canvas.width = video.videoWidth, canvas);
+    		$$invalidate(1, canvas.height = video.videoHeight, canvas);
+
+    		// canvas.style.borderTop = '2px solid cyan'
+    		// canvas.style.boxShadow = '10px 0 20px -2px #0ff'
     		scan();
     	};
 
     	$$self.$capture_state = () => ({
+    		onMount,
     		video,
-    		scanner,
     		canvas,
     		constraints,
     		handleSuccess,
     		handleError,
+    		x,
     		scan
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('video' in $$props) $$invalidate(0, video = $$props.video);
-    		if ('scanner' in $$props) $$invalidate(1, scanner = $$props.scanner);
-    		if ('canvas' in $$props) $$invalidate(2, canvas = $$props.canvas);
+    		if ('canvas' in $$props) $$invalidate(1, canvas = $$props.canvas);
+    		if ('x' in $$props) x = $$props.x;
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [
-    		video,
-    		scanner,
-    		canvas,
-    		scan,
-    		canvas_1_binding,
-    		video_1_binding,
-    		div_binding,
-    		click_handler
-    	];
+    	return [video, canvas, scan, video_1_binding, canvas_1_binding, click_handler];
     }
 
     class App extends SvelteComponentDev {
