@@ -3,6 +3,7 @@
 
 	let video : HTMLVideoElement
 	let canvas : HTMLCanvasElement
+	let ctx : CanvasRenderingContext2D
 	
 	
 	const constraints = {
@@ -12,6 +13,7 @@
 
 	onMount(() => {
 		navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+		ctx = canvas.getContext('2d')
 	})
 
 	function handleSuccess(stream) {
@@ -23,50 +25,91 @@
 	  console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
 	}
 	
-	let x = 0
-	function scan() {
-		if (x < canvas.height)
-		{
+	let nowScanning = false
+	function scan(dir : number) {
+		if (nowScanning) return;
+		nowScanning = true;
+		let x = 0;
+		canvas.width = video.videoWidth
+		canvas.height = video.videoHeight;
+		(function go() {
+			const goesUpOrDown = dir >= 2
+			const end = goesUpOrDown ? canvas.height : canvas.width
+			if (x === end) 
+			{
+				nowScanning = false;
+				return;
+			}
+			
 			x++
-			canvas.getContext('2d').drawImage(video, 
-				0, x, canvas.width, 1, 0, x, canvas.width, 1);
-			requestAnimationFrame(scan)
-		}
-		else
-		{
-			x = 0
-		}
+			ctx.strokeStyle = 'red'
+			ctx.lineWidth = 1
+			const pos = dir % 2 === 1
+			const y = pos ? x : canvas.height - 1 - x;
+			const trail = pos ? 1 : -1;
+			if (goesUpOrDown)
+			{
+				ctx.strokeRect(0, y + 3 * trail, canvas.width, trail * 5)
+				ctx.drawImage(video, 
+					0, y, canvas.width, 1, 0, y, canvas.width, 1);
+			}
+			else
+			{
+				ctx.strokeRect(y + 3 * trail, 0, trail * 5, canvas.height)
+				ctx.drawImage(video, 
+					y, 0, 1, canvas.height, y, 0, 1, canvas.height);
+			}
+			requestAnimationFrame(go)
+		})()
+	}
+	function reset() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height)
 	}
 </script>
 
 <main>
-    <!-- svelte-ignore a11y-media-has-caption -->
-    <video bind:this={video} playsinline autoplay></video>
-	<canvas bind:this={canvas}></canvas>
-	<button on:click={() => {
-		canvas.width = video.videoWidth;
-		canvas.height = video.videoHeight;	  
-		// canvas.style.borderTop = '2px solid cyan'
-		// canvas.style.boxShadow = '10px 0 20px -2px #0ff'
-		scan()
-	  }}> FREEZE </button>
+	
+	<div class=buttons>	
+		<button on:click={() => scan(0)}> ⇦ </button>
+		<button on:click={() => scan(1)}> ⇨ </button>
+		<button on:click={() => scan(2)}> ⇧ </button>
+		<button on:click={() => scan(3)}> ⇩ </button>
+		<button on:click={reset}> reset </button>
+	</div>
+
+	<div class=container>
+		<!-- svelte-ignore a11y-media-has-caption -->
+		<video bind:this={video} playsinline autoplay></video>
+		<canvas bind:this={canvas}></canvas>
+	</div>
+
 </main>
 
 <style>
+	main {
+		height: 100%;
+		width: 100%;
+		border: 1px solid red;
+	}
+	.buttons {
+		display: flex;
+		justify-content: center;
+		/* border: 1px solid red; */
+	}
+	.buttons > button {
+		padding: 1em;
+	}
+	.container {
+		position: relative;
+		width: 80%;
+		border: 2px solid blue;
+	}
 	canvas, video {
 		display: block;
 		position: absolute;
-		width: 100vw;
+		width: 100%;
 		height: auto;
 		background: transparent;
 	}
-	video, canvas { 
-		bottom: 50%;
-	}
-	button {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 9;
-	}
+	
 </style>

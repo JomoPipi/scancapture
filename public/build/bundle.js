@@ -366,48 +366,102 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let main;
-    	let video_1;
-    	let t0;
-    	let canvas_1;
+    	let div0;
+    	let button0;
     	let t1;
-    	let button;
+    	let button1;
+    	let t3;
+    	let button2;
+    	let t5;
+    	let button3;
+    	let t7;
+    	let button4;
+    	let t9;
+    	let div1;
+    	let video_1;
+    	let t10;
+    	let canvas_1;
     	let mounted;
     	let dispose;
 
     	const block = {
     		c: function create() {
     			main = element("main");
-    			video_1 = element("video");
-    			t0 = space();
-    			canvas_1 = element("canvas");
+    			div0 = element("div");
+    			button0 = element("button");
+    			button0.textContent = "⇦";
     			t1 = space();
-    			button = element("button");
-    			button.textContent = "FREEZE";
+    			button1 = element("button");
+    			button1.textContent = "⇨";
+    			t3 = space();
+    			button2 = element("button");
+    			button2.textContent = "⇧";
+    			t5 = space();
+    			button3 = element("button");
+    			button3.textContent = "⇩";
+    			t7 = space();
+    			button4 = element("button");
+    			button4.textContent = "reset";
+    			t9 = space();
+    			div1 = element("div");
+    			video_1 = element("video");
+    			t10 = space();
+    			canvas_1 = element("canvas");
+    			attr_dev(button0, "class", "svelte-16yh2wh");
+    			add_location(button0, file, 59, 2, 1703);
+    			attr_dev(button1, "class", "svelte-16yh2wh");
+    			add_location(button1, file, 60, 2, 1751);
+    			attr_dev(button2, "class", "svelte-16yh2wh");
+    			add_location(button2, file, 61, 2, 1799);
+    			attr_dev(button3, "class", "svelte-16yh2wh");
+    			add_location(button3, file, 62, 2, 1847);
+    			attr_dev(button4, "class", "svelte-16yh2wh");
+    			add_location(button4, file, 63, 2, 1895);
+    			attr_dev(div0, "class", "buttons svelte-16yh2wh");
+    			add_location(div0, file, 58, 1, 1680);
     			video_1.playsInline = true;
     			video_1.autoplay = true;
-    			attr_dev(video_1, "class", "svelte-ili1j9");
-    			add_location(video_1, file, 32, 4, 835);
-    			attr_dev(canvas_1, "class", "svelte-ili1j9");
-    			add_location(canvas_1, file, 33, 1, 891);
-    			attr_dev(button, "class", "svelte-ili1j9");
-    			add_location(button, file, 34, 1, 929);
-    			add_location(main, file, 30, 0, 774);
+    			attr_dev(video_1, "class", "svelte-16yh2wh");
+    			add_location(video_1, file, 68, 2, 2019);
+    			attr_dev(canvas_1, "class", "svelte-16yh2wh");
+    			add_location(canvas_1, file, 69, 2, 2076);
+    			attr_dev(div1, "class", "container svelte-16yh2wh");
+    			add_location(div1, file, 66, 1, 1947);
+    			attr_dev(main, "class", "svelte-16yh2wh");
+    			add_location(main, file, 56, 0, 1670);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
-    			append_dev(main, video_1);
-    			/*video_1_binding*/ ctx[3](video_1);
-    			append_dev(main, t0);
-    			append_dev(main, canvas_1);
-    			/*canvas_1_binding*/ ctx[4](canvas_1);
-    			append_dev(main, t1);
-    			append_dev(main, button);
+    			append_dev(main, div0);
+    			append_dev(div0, button0);
+    			append_dev(div0, t1);
+    			append_dev(div0, button1);
+    			append_dev(div0, t3);
+    			append_dev(div0, button2);
+    			append_dev(div0, t5);
+    			append_dev(div0, button3);
+    			append_dev(div0, t7);
+    			append_dev(div0, button4);
+    			append_dev(main, t9);
+    			append_dev(main, div1);
+    			append_dev(div1, video_1);
+    			/*video_1_binding*/ ctx[8](video_1);
+    			append_dev(div1, t10);
+    			append_dev(div1, canvas_1);
+    			/*canvas_1_binding*/ ctx[9](canvas_1);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[5], false, false, false);
+    				dispose = [
+    					listen_dev(button0, "click", /*click_handler*/ ctx[4], false, false, false),
+    					listen_dev(button1, "click", /*click_handler_1*/ ctx[5], false, false, false),
+    					listen_dev(button2, "click", /*click_handler_2*/ ctx[6], false, false, false),
+    					listen_dev(button3, "click", /*click_handler_3*/ ctx[7], false, false, false),
+    					listen_dev(button4, "click", /*reset*/ ctx[3], false, false, false)
+    				];
+
     				mounted = true;
     			}
     		},
@@ -416,10 +470,10 @@ var app = (function () {
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(main);
-    			/*video_1_binding*/ ctx[3](null);
-    			/*canvas_1_binding*/ ctx[4](null);
+    			/*video_1_binding*/ ctx[8](null);
+    			/*canvas_1_binding*/ ctx[9](null);
     			mounted = false;
-    			dispose();
+    			run_all(dispose);
     		}
     	};
 
@@ -443,10 +497,12 @@ var app = (function () {
     	validate_slots('App', slots, []);
     	let video;
     	let canvas;
+    	let ctx;
     	const constraints = { audio: false, video: true };
 
     	onMount(() => {
     		navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
+    		ctx = canvas.getContext('2d');
     	});
 
     	function handleSuccess(stream) {
@@ -454,16 +510,45 @@ var app = (function () {
     		$$invalidate(0, video.srcObject = stream, video);
     	}
 
-    	let x = 0;
+    	let nowScanning = false;
 
-    	function scan() {
-    		if (x < canvas.height) {
+    	function scan(dir) {
+    		if (nowScanning) return;
+    		nowScanning = true;
+    		let x = 0;
+    		$$invalidate(1, canvas.width = video.videoWidth, canvas);
+    		$$invalidate(1, canvas.height = video.videoHeight, canvas);
+
+    		(function go() {
+    			const goesUpOrDown = dir >= 2;
+    			const end = goesUpOrDown ? canvas.height : canvas.width;
+
+    			if (x === end) {
+    				nowScanning = false;
+    				return;
+    			}
+
     			x++;
-    			canvas.getContext('2d').drawImage(video, 0, x, canvas.width, 1, 0, x, canvas.width, 1);
-    			requestAnimationFrame(scan);
-    		} else {
-    			x = 0;
-    		}
+    			ctx.strokeStyle = 'red';
+    			ctx.lineWidth = 1;
+    			const pos = dir % 2 === 1;
+    			const y = pos ? x : canvas.height - 1 - x;
+    			const trail = pos ? 1 : -1;
+
+    			if (goesUpOrDown) {
+    				ctx.strokeRect(0, y + 3 * trail, canvas.width, trail * 5);
+    				ctx.drawImage(video, 0, y, canvas.width, 1, 0, y, canvas.width, 1);
+    			} else {
+    				ctx.strokeRect(y + 3 * trail, 0, trail * 5, canvas.height);
+    				ctx.drawImage(video, y, 0, 1, canvas.height, y, 0, 1, canvas.height);
+    			}
+
+    			requestAnimationFrame(go);
+    		})();
+    	}
+
+    	function reset() {
+    		ctx.clearRect(0, 0, canvas.width, canvas.height);
     	}
 
     	const writable_props = [];
@@ -471,6 +556,11 @@ var app = (function () {
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<App> was created with unknown prop '${key}'`);
     	});
+
+    	const click_handler = () => scan(0);
+    	const click_handler_1 = () => scan(1);
+    	const click_handler_2 = () => scan(2);
+    	const click_handler_3 = () => scan(3);
 
     	function video_1_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
@@ -486,37 +576,42 @@ var app = (function () {
     		});
     	}
 
-    	const click_handler = () => {
-    		$$invalidate(1, canvas.width = video.videoWidth, canvas);
-    		$$invalidate(1, canvas.height = video.videoHeight, canvas);
-
-    		// canvas.style.borderTop = '2px solid cyan'
-    		// canvas.style.boxShadow = '10px 0 20px -2px #0ff'
-    		scan();
-    	};
-
     	$$self.$capture_state = () => ({
     		onMount,
     		video,
     		canvas,
+    		ctx,
     		constraints,
     		handleSuccess,
     		handleError,
-    		x,
-    		scan
+    		nowScanning,
+    		scan,
+    		reset
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('video' in $$props) $$invalidate(0, video = $$props.video);
     		if ('canvas' in $$props) $$invalidate(1, canvas = $$props.canvas);
-    		if ('x' in $$props) x = $$props.x;
+    		if ('ctx' in $$props) ctx = $$props.ctx;
+    		if ('nowScanning' in $$props) nowScanning = $$props.nowScanning;
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [video, canvas, scan, video_1_binding, canvas_1_binding, click_handler];
+    	return [
+    		video,
+    		canvas,
+    		scan,
+    		reset,
+    		click_handler,
+    		click_handler_1,
+    		click_handler_2,
+    		click_handler_3,
+    		video_1_binding,
+    		canvas_1_binding
+    	];
     }
 
     class App extends SvelteComponentDev {
