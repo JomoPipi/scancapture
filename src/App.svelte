@@ -12,13 +12,17 @@
 	};
 
 	onMount(() => {
-		navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
-		ctx = canvas.getContext('2d')
+		navigator.mediaDevices.getUserMedia(constraints)
+			.then(handleSuccess)
+			.catch(handleError);
 	})
 
 	function handleSuccess(stream) {
 	//   (window as any).stream = stream; // make stream available to browser console
-	  video.srcObject = stream;
+	  	video.srcObject = stream;
+		canvas.width = video.videoWidth
+		canvas.height = video.videoHeight
+		ctx = canvas.getContext('2d')
 	}
 	
 	function handleError(error) {
@@ -75,12 +79,11 @@
 		paused = !paused
 	}
 	function drawPencil(e: PointerEvent) {
-		canvas.width = video.videoWidth
-		canvas.height = video.videoHeight
 		const size = 20
 		const s2 = size / 2
-		const x = e.clientX - s2
-		const y = e.clientY - s2
+		const x = e.offsetX * (canvas.width / canvas.offsetWidth)
+		const y = e.offsetY * (canvas.height / canvas.offsetHeight)
+		console.log('x,y =',x,y)
 		ctx.drawImage(video, 
 			x, y, size, size, x, y, size, size);
 	}
@@ -106,7 +109,6 @@
 			on:pointermove={drawPencil}>
 		</canvas>
 	</div>
-
 </main>
 
 <style>
@@ -128,7 +130,7 @@
 	}
 	.container {
 		position: relative;
-		width: 100%;
+		width: 100%; 
 	}
 	canvas, video {
 		display: block;

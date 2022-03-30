@@ -417,32 +417,32 @@ var app = (function () {
     			video_1 = element("video");
     			t14 = space();
     			canvas_1 = element("canvas");
-    			attr_dev(h3, "class", "svelte-11pg66y");
-    			add_location(h3, file, 74, 1, 2085);
-    			attr_dev(button0, "class", "svelte-11pg66y");
-    			add_location(button0, file, 77, 2, 2141);
-    			attr_dev(button1, "class", "svelte-11pg66y");
-    			add_location(button1, file, 78, 2, 2189);
-    			attr_dev(button2, "class", "svelte-11pg66y");
-    			add_location(button2, file, 79, 2, 2237);
-    			attr_dev(button3, "class", "svelte-11pg66y");
-    			add_location(button3, file, 80, 2, 2285);
-    			attr_dev(button4, "class", "svelte-11pg66y");
-    			add_location(button4, file, 81, 2, 2333);
-    			attr_dev(button5, "class", "svelte-11pg66y");
-    			add_location(button5, file, 82, 2, 2377);
-    			attr_dev(div0, "class", "buttons svelte-11pg66y");
-    			add_location(div0, file, 76, 1, 2118);
+    			attr_dev(h3, "class", "svelte-18y91ps");
+    			add_location(h3, file, 77, 1, 2203);
+    			attr_dev(button0, "class", "svelte-18y91ps");
+    			add_location(button0, file, 80, 2, 2259);
+    			attr_dev(button1, "class", "svelte-18y91ps");
+    			add_location(button1, file, 81, 2, 2307);
+    			attr_dev(button2, "class", "svelte-18y91ps");
+    			add_location(button2, file, 82, 2, 2355);
+    			attr_dev(button3, "class", "svelte-18y91ps");
+    			add_location(button3, file, 83, 2, 2403);
+    			attr_dev(button4, "class", "svelte-18y91ps");
+    			add_location(button4, file, 84, 2, 2451);
+    			attr_dev(button5, "class", "svelte-18y91ps");
+    			add_location(button5, file, 85, 2, 2495);
+    			attr_dev(div0, "class", "buttons svelte-18y91ps");
+    			add_location(div0, file, 79, 1, 2236);
     			video_1.playsInline = true;
     			video_1.autoplay = true;
-    			attr_dev(video_1, "class", "svelte-11pg66y");
-    			add_location(video_1, file, 87, 2, 2501);
-    			attr_dev(canvas_1, "class", "svelte-11pg66y");
-    			add_location(canvas_1, file, 88, 2, 2558);
-    			attr_dev(div1, "class", "container svelte-11pg66y");
-    			add_location(div1, file, 85, 1, 2429);
-    			attr_dev(main, "class", "svelte-11pg66y");
-    			add_location(main, file, 73, 0, 2077);
+    			attr_dev(video_1, "class", "svelte-18y91ps");
+    			add_location(video_1, file, 90, 2, 2619);
+    			attr_dev(canvas_1, "class", "svelte-18y91ps");
+    			add_location(canvas_1, file, 91, 2, 2676);
+    			attr_dev(div1, "class", "container svelte-18y91ps");
+    			add_location(div1, file, 88, 1, 2547);
+    			attr_dev(main, "class", "svelte-18y91ps");
+    			add_location(main, file, 76, 0, 2195);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -523,12 +523,15 @@ var app = (function () {
 
     	onMount(() => {
     		navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess).catch(handleError);
-    		ctx = canvas.getContext('2d');
     	});
 
     	function handleSuccess(stream) {
     		//   (window as any).stream = stream; // make stream available to browser console
     		$$invalidate(0, video.srcObject = stream, video);
+
+    		$$invalidate(1, canvas.width = video.videoWidth, canvas);
+    		$$invalidate(1, canvas.height = video.videoHeight, canvas);
+    		ctx = canvas.getContext('2d');
     	}
 
     	let nowScanning = false;
@@ -582,12 +585,10 @@ var app = (function () {
     	}
 
     	function drawPencil(e) {
-    		$$invalidate(1, canvas.width = video.videoWidth, canvas);
-    		$$invalidate(1, canvas.height = video.videoHeight, canvas);
     		const size = 20;
-    		const s2 = size / 2;
-    		const x = e.clientX - s2;
-    		const y = e.clientY - s2;
+    		const x = e.offsetX * (canvas.width / canvas.offsetWidth);
+    		const y = e.offsetY * (canvas.height / canvas.offsetHeight);
+    		console.log('x,y =', x, y);
     		ctx.drawImage(video, x, y, size, size, x, y, size, size);
     	}
 
