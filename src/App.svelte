@@ -26,15 +26,21 @@
 	}
 	
 	let nowScanning = false
+	let paused = false;
 	function scan(dir : number) {
 		if (nowScanning) return;
 		nowScanning = true;
 		let x = 0;
 		canvas.width = video.videoWidth
-		canvas.height = video.videoHeight;
+		canvas.height = video.videoHeight
+		const goesUpOrDown = dir >= 2
+		const end = goesUpOrDown ? canvas.height : canvas.width;
 		(function go() {
-			const goesUpOrDown = dir >= 2
-			const end = goesUpOrDown ? canvas.height : canvas.width
+			if (paused)
+			{
+				requestAnimationFrame(go)
+				return;
+			}
 			if (x === end) 
 			{
 				nowScanning = false;
@@ -65,6 +71,19 @@
 	function reset() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height)
 	}
+	function pause() {
+		paused = !paused
+	}
+	function drawPencil(e: PointerEvent) {
+		canvas.width = video.videoWidth
+		canvas.height = video.videoHeight
+		const size = 20
+		const s2 = size / 2
+		const x = e.clientX - s2
+		const y = e.clientY - s2
+		ctx.drawImage(video, 
+			x, y, size, size, x, y, size, size);
+	}
 </script>
 
 <main>
@@ -75,13 +94,17 @@
 		<button on:click={() => scan(1)}> ⇨ </button>
 		<button on:click={() => scan(2)}> ⇧ </button>
 		<button on:click={() => scan(3)}> ⇩ </button>
+		<button on:click={pause}> pause </button>
 		<button on:click={reset}> reset </button>
 	</div>
 
 	<div class=container>
 		<!-- svelte-ignore a11y-media-has-caption -->
 		<video bind:this={video} playsinline autoplay></video>
-		<canvas bind:this={canvas}></canvas>
+		<canvas bind:this={canvas}
+			on:pointerdown={drawPencil}
+			on:pointermove={drawPencil}>
+		</canvas>
 	</div>
 
 </main>

@@ -379,9 +379,11 @@ var app = (function () {
     	let t9;
     	let button4;
     	let t11;
+    	let button5;
+    	let t13;
     	let div1;
     	let video_1;
-    	let t12;
+    	let t14;
     	let canvas_1;
     	let mounted;
     	let dispose;
@@ -406,36 +408,41 @@ var app = (function () {
     			button3.textContent = "⇩";
     			t9 = space();
     			button4 = element("button");
-    			button4.textContent = "reset";
+    			button4.textContent = "pause";
     			t11 = space();
+    			button5 = element("button");
+    			button5.textContent = "reset";
+    			t13 = space();
     			div1 = element("div");
     			video_1 = element("video");
-    			t12 = space();
+    			t14 = space();
     			canvas_1 = element("canvas");
     			attr_dev(h3, "class", "svelte-11pg66y");
-    			add_location(h3, file, 57, 1, 1668);
+    			add_location(h3, file, 74, 1, 2085);
     			attr_dev(button0, "class", "svelte-11pg66y");
-    			add_location(button0, file, 60, 2, 1724);
+    			add_location(button0, file, 77, 2, 2141);
     			attr_dev(button1, "class", "svelte-11pg66y");
-    			add_location(button1, file, 61, 2, 1772);
+    			add_location(button1, file, 78, 2, 2189);
     			attr_dev(button2, "class", "svelte-11pg66y");
-    			add_location(button2, file, 62, 2, 1820);
+    			add_location(button2, file, 79, 2, 2237);
     			attr_dev(button3, "class", "svelte-11pg66y");
-    			add_location(button3, file, 63, 2, 1868);
+    			add_location(button3, file, 80, 2, 2285);
     			attr_dev(button4, "class", "svelte-11pg66y");
-    			add_location(button4, file, 64, 2, 1916);
+    			add_location(button4, file, 81, 2, 2333);
+    			attr_dev(button5, "class", "svelte-11pg66y");
+    			add_location(button5, file, 82, 2, 2377);
     			attr_dev(div0, "class", "buttons svelte-11pg66y");
-    			add_location(div0, file, 59, 1, 1701);
+    			add_location(div0, file, 76, 1, 2118);
     			video_1.playsInline = true;
     			video_1.autoplay = true;
     			attr_dev(video_1, "class", "svelte-11pg66y");
-    			add_location(video_1, file, 69, 2, 2040);
+    			add_location(video_1, file, 87, 2, 2501);
     			attr_dev(canvas_1, "class", "svelte-11pg66y");
-    			add_location(canvas_1, file, 70, 2, 2097);
+    			add_location(canvas_1, file, 88, 2, 2558);
     			attr_dev(div1, "class", "container svelte-11pg66y");
-    			add_location(div1, file, 67, 1, 1968);
+    			add_location(div1, file, 85, 1, 2429);
     			attr_dev(main, "class", "svelte-11pg66y");
-    			add_location(main, file, 56, 0, 1660);
+    			add_location(main, file, 73, 0, 2077);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -454,21 +461,26 @@ var app = (function () {
     			append_dev(div0, button3);
     			append_dev(div0, t9);
     			append_dev(div0, button4);
-    			append_dev(main, t11);
+    			append_dev(div0, t11);
+    			append_dev(div0, button5);
+    			append_dev(main, t13);
     			append_dev(main, div1);
     			append_dev(div1, video_1);
-    			/*video_1_binding*/ ctx[8](video_1);
-    			append_dev(div1, t12);
+    			/*video_1_binding*/ ctx[10](video_1);
+    			append_dev(div1, t14);
     			append_dev(div1, canvas_1);
-    			/*canvas_1_binding*/ ctx[9](canvas_1);
+    			/*canvas_1_binding*/ ctx[11](canvas_1);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(button0, "click", /*click_handler*/ ctx[4], false, false, false),
-    					listen_dev(button1, "click", /*click_handler_1*/ ctx[5], false, false, false),
-    					listen_dev(button2, "click", /*click_handler_2*/ ctx[6], false, false, false),
-    					listen_dev(button3, "click", /*click_handler_3*/ ctx[7], false, false, false),
-    					listen_dev(button4, "click", /*reset*/ ctx[3], false, false, false)
+    					listen_dev(button0, "click", /*click_handler*/ ctx[6], false, false, false),
+    					listen_dev(button1, "click", /*click_handler_1*/ ctx[7], false, false, false),
+    					listen_dev(button2, "click", /*click_handler_2*/ ctx[8], false, false, false),
+    					listen_dev(button3, "click", /*click_handler_3*/ ctx[9], false, false, false),
+    					listen_dev(button4, "click", /*pause*/ ctx[4], false, false, false),
+    					listen_dev(button5, "click", /*reset*/ ctx[3], false, false, false),
+    					listen_dev(canvas_1, "pointerdown", /*drawPencil*/ ctx[5], false, false, false),
+    					listen_dev(canvas_1, "pointermove", /*drawPencil*/ ctx[5], false, false, false)
     				];
 
     				mounted = true;
@@ -479,8 +491,8 @@ var app = (function () {
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(main);
-    			/*video_1_binding*/ ctx[8](null);
-    			/*canvas_1_binding*/ ctx[9](null);
+    			/*video_1_binding*/ ctx[10](null);
+    			/*canvas_1_binding*/ ctx[11](null);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -520,6 +532,7 @@ var app = (function () {
     	}
 
     	let nowScanning = false;
+    	let paused = false;
 
     	function scan(dir) {
     		if (nowScanning) return;
@@ -527,10 +540,14 @@ var app = (function () {
     		let x = 0;
     		$$invalidate(1, canvas.width = video.videoWidth, canvas);
     		$$invalidate(1, canvas.height = video.videoHeight, canvas);
+    		const goesUpOrDown = dir >= 2;
+    		const end = goesUpOrDown ? canvas.height : canvas.width;
 
     		(function go() {
-    			const goesUpOrDown = dir >= 2;
-    			const end = goesUpOrDown ? canvas.height : canvas.width;
+    			if (paused) {
+    				requestAnimationFrame(go);
+    				return;
+    			}
 
     			if (x === end) {
     				nowScanning = false;
@@ -558,6 +575,20 @@ var app = (function () {
 
     	function reset() {
     		ctx.clearRect(0, 0, canvas.width, canvas.height);
+    	}
+
+    	function pause() {
+    		paused = !paused;
+    	}
+
+    	function drawPencil(e) {
+    		$$invalidate(1, canvas.width = video.videoWidth, canvas);
+    		$$invalidate(1, canvas.height = video.videoHeight, canvas);
+    		const size = 20;
+    		const s2 = size / 2;
+    		const x = e.clientX - s2;
+    		const y = e.clientY - s2;
+    		ctx.drawImage(video, x, y, size, size, x, y, size, size);
     	}
 
     	const writable_props = [];
@@ -594,8 +625,11 @@ var app = (function () {
     		handleSuccess,
     		handleError,
     		nowScanning,
+    		paused,
     		scan,
-    		reset
+    		reset,
+    		pause,
+    		drawPencil
     	});
 
     	$$self.$inject_state = $$props => {
@@ -603,6 +637,7 @@ var app = (function () {
     		if ('canvas' in $$props) $$invalidate(1, canvas = $$props.canvas);
     		if ('ctx' in $$props) ctx = $$props.ctx;
     		if ('nowScanning' in $$props) nowScanning = $$props.nowScanning;
+    		if ('paused' in $$props) paused = $$props.paused;
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -614,6 +649,8 @@ var app = (function () {
     		canvas,
     		scan,
     		reset,
+    		pause,
+    		drawPencil,
     		click_handler,
     		click_handler_1,
     		click_handler_2,
